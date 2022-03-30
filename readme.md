@@ -118,6 +118,21 @@ name | String | Name of the bar
 location | String | Location of the bar (Multiple of the same bar could exist in different cities)
 image | File | Image associated with the bar
 ### Networking
+```java
+	ParseQuery<Favorites> query = ParseQuery.getQuery(Favorites.class);
+	query.include(currentUser);
+        query.addDescendingOrder(reatedAt);
+        query.findInBackground(new FindCallback<>() {
+            @Override
+            public void done(List<Favorites> favorites, ParseException e) {
+		if(e != null) Log.e("CLASS_TAG", String.valueOf(e) + "has occurred.", e);
+                for(Favorite favorite : favorites) {
+                    //Display favorites
+                }
+                //Do more things with favorites
+            }
+        });
+```
 - [Add list of network requests by screen ]
 - [Create basic snippets for each Parse network request]
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
