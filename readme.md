@@ -11,7 +11,6 @@
 TavernCrawler is an app geared towards making the boring side of planning of a bar crawl into a quick and easy endeavour! Instead of having to look up bars one by one and tediously plan out an expedition, you instead have a list of all the bars near you, complete with contact information, menus, a map, and more!
 
 ### App Evaluation
-
 - **Category:** Travel & Local 
 - **Mobile:** The app would be best designed for mobile devices, as the ability to take information with you and potentially order a ride home would require a mobile device.
 - **Story:** Provides a list of local bars, and allows users to plan a route of those bars. Users can then decide to leave a review/rating of those bars.
@@ -92,11 +91,10 @@ Optional:
    * Can enter review screen for writing reviews
 
 ## Wireframes
-[Add picture of your hand sketched wireframes in this section]
 <img src="https://i.imgur.com/LFVLKES.png" width=600>
 
 ### [BONUS] Digital Wireframes & Mockups
-<img src="https://i.imgur.com/EeCEoQ0.png" width=600>
+<img src="https://i.imgur.com/XC088pF.png" width=600>
 
 ### [BONUS] Interactive Prototype
 ![Video Walkthrough](DEMO2.gif)
