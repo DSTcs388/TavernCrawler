@@ -99,6 +99,7 @@ Optional:
 <img src="https://i.imgur.com/EeCEoQ0.png" width=600>
 
 ### [BONUS] Interactive Prototype
+<img src="https://imgur.com/a/q2r7Rm4.gif" width=600>
 
 ## Schema 
 [This section will be completed in Unit 9]
