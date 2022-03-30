@@ -1,4 +1,4 @@
-# APP_NAME_HERE
+# TavernCrawler
 
 ## Table of Contents
 1. [Overview](#Overview)
@@ -8,16 +8,16 @@
 
 ## Overview
 ### Description
-[Description of your app]
+TavernCrawler is an app geared towards making the boring side of planning of a bar crawl into a quick and easy endeavour! Instead of having to look up bars one by one and tediously plan out an expedition, you instead have a list of all the bars near you, complete with contact information, menus, a map, and more!
 
 ### App Evaluation
-[Evaluation of your app across the following attributes]
-- **Category:** 
-- **Mobile:** The app would be best designed for mobile devices, as the ability to take information with you and potentially order a ride home would requiree a mobile device.
-- **Story:** 
-- **Market:** Only users of legal drinking age can use this app, potentially restricting signing up without verifying age.
+
+- **Category:** Travel & Local 
+- **Mobile:** The app would be best designed for mobile devices, as the ability to take information with you and potentially order a ride home would require a mobile device.
+- **Story:** Provides a list of local bars, and allows users to plan a route of those bars. Users can then decide to leave a review/rating of those bars.
+- **Market:** Only users of legal drinking age can use this app, potentially restricting signing up without verifying age. Geared towards alcohol enthusiasts.
 - **Habit:** The app would be designed to provide a convenient source of information for going out to drink, even at just one location. Users would use the app as often as they tend to go drinking.
-- **Scope:** 
+- **Scope:** Initially, we would concentrate on making sure that the app functions in most urban cities in the USA. This app could broaden its scope eventually to include more areas, with a more comprehensive set of bars, and with closer collaboration with major bars and chains.
 
 ## Product Spec
 
