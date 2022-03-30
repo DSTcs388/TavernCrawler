@@ -93,9 +93,10 @@ Optional:
 
 ## Wireframes
 [Add picture of your hand sketched wireframes in this section]
-<img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
+<img src="https://i.imgur.com/LFVLKES.png" width=600>
 
 ### [BONUS] Digital Wireframes & Mockups
+<img src="https://i.imgur.com/EeCEoQ0.png" width=600>
 
 ### [BONUS] Interactive Prototype
 
