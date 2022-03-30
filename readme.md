@@ -102,7 +102,20 @@ Optional:
 ## Schema 
 [This section will be completed in Unit 9]
 ### Models
-[Add table of models]
+Property | Type | Description
+--- | --- | ---
+objectId | String | Unique identifier for the object (Default)
+username | String | Username of the user
+password | String | Password of the user
+homeAddress | String | Home address of the user
+title | String | Title of the user's review
+ratingNum | Number | The rating number associated with the review
+body | String | Content of the user's review
+user | Pointer | User associated with the review
+bar | Pointer | Bar that the user has favorited
+user | Pointer | User that has favorited the bar
+name | String | Name of the bar
+location | String | Location of the bar (Multiple of the same bar could exist in different cities)
 ### Networking
 - [Add list of network requests by screen ]
 - [Create basic snippets for each Parse network request]
