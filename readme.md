@@ -116,6 +116,7 @@ bar | Pointer | Bar that the user has favorited
 user | Pointer | User that has favorited the bar
 name | String | Name of the bar
 location | String | Location of the bar (Multiple of the same bar could exist in different cities)
+image | File | Image associated with the bar
 ### Networking
 - [Add list of network requests by screen ]
 - [Create basic snippets for each Parse network request]
