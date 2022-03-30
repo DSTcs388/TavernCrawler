@@ -99,7 +99,7 @@ Optional:
 <img src="https://i.imgur.com/EeCEoQ0.png" width=600>
 
 ### [BONUS] Interactive Prototype
-![Video Walkthrough](DEMO.gif)
+![Video Walkthrough](DEMO2.gif)
 
 ## Schema 
 [This section will be completed in Unit 9]
