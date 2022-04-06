@@ -147,6 +147,8 @@ image | File | Image associated with the bar
 - (Create/POST) | CCreate a post of a review
 - Read(Get) | Get the infor for the bar including a adresss and get reviews
 - Delete | Delete a review post on the bar
+- Settings
+- Update | Update an  setting like user name password or favorite or blacklist
 
 - [Create basic snippets for each Parse network request]
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
