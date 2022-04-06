@@ -134,31 +134,209 @@ image | File | Image associated with the bar
         });
 ```
 **Login Screen**
-* (Read/GET) Query user login information
-* (Create/POST) Create a new user
+* (Read/GET) Login user
+```java
+	ParseUser.logInInBackground(etUsername.getText().toString(), etPassword.getText().toString(), new LogInCallback() {
+            @Override
+            public void done(ParseUser user, ParseException e) {
+                if(e != null) Log.e(TAG, "Something went wrong with Parse", e);
+		//Use intent to redirect user
+            }
+        });
+```
+* (Create/POST) Create new user
+```java
+	User user = new User();
+        user.setUsername(etUsername.getText().toString());
+	user.setPassword(etPassword.getText().toString());
+        user.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e != null) Log.e(TAG, "Error while saving", e);
+        });
+```
+
 **Home Screen**
 * (Read/GET) Query all available ratings for bars
+```java
+	ParseQuery<Bars> query = ParseQuery.getQuery(Bars.class);
+	query.includeAll();
+        query.findInBackground(new FindCallback<>() {
+            @Override
+            public void done(List<Bars> bars, ParseException e) {
+		if(e != null) Log.e("CLASS_TAG", String.valueOf(e) + "has occurred.", e);
+                for(Bars bar : bars) {
+                    //Display bars
+                }
+            }
+        });
+```
 * (Read/GET) Query all favorite bars of user
+```java
+	ParseQuery<Favorites> query = ParseQuery.getQuery(Favorites.class);
+	query.include(Favorites.user);
+	query.whereEqualTo(Favorites.user, ParseUser.getCurrentUser());
+        query.findInBackground(new FindCallback<>() {
+            @Override
+            public void done(List<Favorites> favorites, ParseException e) {
+		if(e != null) Log.e("CLASS_TAG", String.valueOf(e) + "has occurred.", e);
+                for(Favorite favorite : favorites) {
+                    //Display favorites
+                }
+            }
+        });
+```
 * (Create/POST) Add bar to route
+```java
+	Bars bar = new Bars();
+        bar.setUser(ParseUser.getCurrentUser());
+	bar.setBar(new Bars()); //Bar to be added
+        bar.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e != null) {
+                    Log.e(TAG, "Error while saving", e);
+                    return;
+                }
+            }
+        });
+```
 
 **Detail Screen**
-* (Read/GET) Query all available ratings for bar
 * (Read/GET) Query all available reviews for bar
+```java
+	ParseQuery<Reviews> query = ParseQuery.getQuery(Reviews.class);
+	query.whereEqualTo(Reviews.bar, getCurrentBar());
+        query.findInBackground(new FindCallback<>() {
+            @Override
+            public void done(List<Reviews> reviews, ParseException e) {
+		if(e != null) Log.e("CLASS_TAG", String.valueOf(e) + "has occurred.", e);
+                for(Reviews review : reviews) {
+                    //Display reviews
+                }
+            }
+        });
+```
 * (Create/POST) Add bar to favorites
+```java
+	Favorites favorite = new Favorites();
+        favorite.setUser(ParseUser.getCurrentUser());
+	favorite.setBar(new Bars()); //Bar to be added
+        favorite.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e != null) {
+                    Log.e(TAG, "Error while saving", e);
+                    return;
+                }
+            }
+        });
+```
 * (Create/POST) Add a bar to blacklist
+```java
+	BlacklistedBar blacklistedBar = new BlacklistedBar();
+        blacklistedBar.setUser(ParseUser.getCurrentUser());
+	blacklistedBar.setBar(new Bars()); //Bar to be added
+        blacklistedBar.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e != null) {
+                    Log.e(TAG, "Error while saving", e);
+                    return;
+                }
+            }
+        });
+```
 * (Delete) Delete bar from favorites
+```java
+	ParseQuery<Favorites> query = ParseQuery.getQuery(Favorites.class);
+	query.whereEqualTo(Favorites.user, ParseUser.getCurrentUser());
+	query.whereEqualTo(Favorites.bar, getCurrentBar());
+	query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Favorites> favorites, ParseException e) {
+                if(e != null) Log.e(TAG, "Something in this query has gone wrong", e);
+                for(Favorites favorite : favorites) {
+                    favorite.deleteInBackground();
+                }
+            }
+        });
+```
 * (Delete) Delete a bar from blacklist
+```java
+	ParseQuery<BlacklistedBar> query = ParseQuery.getQuery(BlacklistedBar.class);
+	query.whereEqualTo(BlacklistedBar.user, ParseUser.getCurrentUser());
+	query.whereEqualTo(BlacklistedBar.bar, getCurrentBar());
+	query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<BlacklistedBar> blacklistedBars, ParseException e) {
+                if(e != null) Log.e(TAG, "Something in this query has gone wrong", e);
+                for(BlacklistedBar blacklistedBar : blacklistedBars) {
+                    blacklistedBar.deleteInBackground();
+                }
+            }
+        });
+```
 
 **Review Screen**
 * (Create/POST) Create review for bar
-* (Create/POST) Create rating for bar
+```java
+	Reviews review = new Reviews();
+        review.setUser(ParseUser.getCurrentUser());
+	review.setBar(new Bars()); //Bar to be added
+	review.setBody(etBody.getText().toString());
+        review.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e != null) Log.e(TAG, "Error while saving", e);
+            }
+        });
+```
 
 **Route Screen**
 * (Read/GET) Query all bars in current route
+```java
+	ParseQuery<Bars> query = ParseQuery.getQuery(Bars.class);
+	query.include(Bars.user);
+	query.whereEqualTo(Bar.onRoute, true);
+        query.findInBackground(new FindCallback<>() {
+            @Override
+            public void done(List<Bars> bars, ParseException e) {
+		if(e != null) Log.e("CLASS_TAG", String.valueOf(e) + "has occurred.", e);
+                for(Bars bar : bars) {
+                    //Display bars
+                }
+            }
+        });
+```
 
 **Profile Screen**
 * (Read/GET) Query all available profile information
-* (Update/PUT) Update profile information (Password excluded)
+```java
+	ParseQuery<User> query = ParseQuery.getQuery(User.class);
+	query.include(User.user);
+        query.findInBackground(new FindCallback<>() {
+            @Override
+            public void done(User user, ParseException e) {
+		if(e != null) Log.e("CLASS_TAG", String.valueOf(e) + "has occurred.", e);
+		//Display user data to profile
+            }
+        });
+```
 
 **Settings Screen**
 * (Update/PUT) Update username, password, blacklist, and favorites
+```java
+	ParseQuery<User> query = ParseQuery.getQuery(User.class);
+	query.whereEqualTo(User.user, ParseUser.getCurrentUser());
+	query.findInBackground(new FindCallback<ParseObject>() {
+	    @Override
+	    public void done(List<User> users, ParseException e) {
+		if(e != null) Log.e(TAG, "Something went wrong here", e);
+		User user = users.get(0);
+		//Put changed information into user
+		user.saveInBackground();
+		
+	    }
+	 });
+```
