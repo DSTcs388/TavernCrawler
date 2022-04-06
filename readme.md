@@ -133,22 +133,31 @@ image | File | Image associated with the bar
             }
         });
 ```
-- [Add list of network requests by screen ]
-- Home screen page
-- Read(Get) | You will get a query of bars in the area
-- Delete | Add a bar to a blacklist, which removes from query
-- (Create/POST) | Add a like to a bar to the favorites
-- Login Screen
-- (Create/POST) | Add a username and password to create a new account
-- Read(Get) |Get the login information access for the account 
-- Map
-- Read(Get) | Get an map with an a waypoint to the bar you want to go on the list
-- Details Page
-- (Create/POST) | CCreate a post of a review
-- Read(Get) | Get the infor for the bar including a adresss and get reviews
-- Delete | Delete a review post on the bar
-- Settings
-- Update | Update an  setting like user name password or favorite or blacklist
+**Login Screen**
+* (Read/GET) Query user login information
+* (Create/POST) Create a new user
+**Home Screen**
+* (Read/GET) Query all available ratings for bars
+* (Create/POST) Add bar to route
 
-- [Create basic snippets for each Parse network request]
-- [OPTIONAL: List endpoints if using existing API such as Yelp]
+**Detail Screen**
+* (Read/GET) Query all available ratings for bar
+* (Read/GET) Query all available reviews for bar
+* (Create/POST) Add bar to favorites
+* (Create/POST) Add a bar to blacklist
+* (Delete) Delete bar from favorites
+* (Delete) Delete a bar from blacklist
+
+**Review Screen**
+* (Create/POST) Create review for bar
+* (Create/POST) Create rating for bar
+
+**Route Screen**
+* (Read/GET) Query all bars in current route
+
+**Profile Screen**
+* (Read/GET) Query all available profile information
+* (Update/PUT) Update profile information (Password excluded)
+
+**Settings Screen**
+* (Update/PUT) Update username, password, blacklist, and favorites
