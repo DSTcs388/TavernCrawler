@@ -134,5 +134,19 @@ image | File | Image associated with the bar
         });
 ```
 - [Add list of network requests by screen ]
+- Home screen page
+- Read(Get) | You will get a query of bars in the area
+- Delete | Add a bar to a blacklist, which removes from query
+- (Create/POST) | Add a like to a bar to the favorites
+- Login Screen
+- (Create/POST) | Add a username and password to create a new account
+- Read(Get) |Get the login information access for the account 
+- Map
+- Read(Get) | Get an map with an a waypoint to the bar you want to go on the list
+- Details Page
+- (Create/POST) | CCreate a post of a review
+- Read(Get) | Get the infor for the bar including a adresss and get reviews
+- Delete | Delete a review post on the bar
+
 - [Create basic snippets for each Parse network request]
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
