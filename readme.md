@@ -138,6 +138,7 @@ image | File | Image associated with the bar
 * (Create/POST) Create a new user
 **Home Screen**
 * (Read/GET) Query all available ratings for bars
+* (Read/GET) Query all favorite bars of user
 * (Create/POST) Add bar to route
 
 **Detail Screen**
