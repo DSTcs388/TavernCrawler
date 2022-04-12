@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TavernCrawler</string>
+    <string name="back4app_id">QErK5UsJf7OW5sqfkC92DCAcCyPy7F3ZI31AimFZ</string>
+    <string name="back4app_ck">dw3kGmDqwqbWdIwLMJkNpne5EoGGl9U7Sen2KyJY</string>
+    <string name="back4app_url">https://parseapi.back4app.com/</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
