@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences("Login Check", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("UserLogged", true);
+        editor.putBoolean(getString(R.string.userLogged), true);
         editor.putString("username", username);
         editor.commit();
 

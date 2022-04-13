@@ -27,4 +27,12 @@
             app:menu="@menu/menu_bottom_navigation">
         </com.google.android.material.bottomnavigation.BottomNavigationView>
     </RelativeLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:id="@+id/navigation_view"
+        app:menu="@menu/menu_top_navigation"/>
+
 </androidx.drawerlayout.widget.DrawerLayout>
