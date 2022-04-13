@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.taverncrawler.fragments.ProfileFragment;
+import com.example.taverncrawler.fragments.ReviewsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private NavigationView navigationView;
+
+    final FragmentManager fragmentManager = getSupportFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,11 +88,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                Fragment fragment;
                 switch(item.getItemId()) {
                     case R.id.action_feed:
+                        fragment = new ReviewsFragment();
                         transaction.replace(R.id.container, fragment).commit();
                         return true;
                     case R.id.action_route:
+                        fragment = null;
                         transaction.replace(R.id.container, fragment).commit();
                         return true;
                 }
@@ -103,4 +110,5 @@ public class MainActivity extends AppCompatActivity {
         actionBarDrawerToggle.onOptionsItemSelected(item);
         return super.onOptionsItemSelected(item);
     }
+
 }
