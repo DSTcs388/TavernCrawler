@@ -65,7 +65,7 @@ TavernCrawler is an app geared towards making the boring side of planning of a b
 ### 3. Navigation
 
 **Tab Navigation** (Tab to Screen)
-
+s
 * Map
 * Lists
 * Settings
