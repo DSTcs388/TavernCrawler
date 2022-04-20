@@ -26,10 +26,12 @@ import android.widget.Toast;
 
 import com.example.taverncrawler.fragments.FeedFragment;
 import com.example.taverncrawler.fragments.ProfileFragment;
+<<<<<<< HEAD
 import com.example.taverncrawler.fragments.RouteFragment;
+=======
 import com.example.taverncrawler.fragments.ReviewsFragment;
 import com.example.taverncrawler.fragments.SettingsFragment;
-
+>>>>>>> 5e7b118560ddda467c8815d7d75a1ab66959eb05
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
@@ -123,8 +125,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment fragment = null;
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                Fragment fragment;
                 switch(item.getItemId()) {
                     case R.id.action_feed:
+<<<<<<< HEAD
                         fragment = new FeedFragment();
                         Bundle bundle = new Bundle();
                         bundle.putDouble("lat", latitude);
@@ -138,7 +142,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                         bundle1.putDouble("lat", latitude);
                         bundle1.putDouble("longi", longitude);
                         fragment.setArguments(bundle1);
+=======
                         fragment = new ReviewsFragment();
+                        transaction.replace(R.id.container, fragment).commit();
+                        return true;
+                    case R.id.action_route:
+                        fragment = null;
+>>>>>>> 5e7b118560ddda467c8815d7d75a1ab66959eb05
                         transaction.replace(R.id.container, fragment).commit();
                         return true;
                 }
@@ -154,6 +164,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         return super.onOptionsItemSelected(item);
     }
 
+<<<<<<< HEAD
     private void requestPermission() {
         try {
             if (ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
@@ -205,4 +216,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     @Override
     public void onLocationChanged(@NonNull Location location) {}
+=======
+>>>>>>> 5e7b118560ddda467c8815d7d75a1ab66959eb05
 }

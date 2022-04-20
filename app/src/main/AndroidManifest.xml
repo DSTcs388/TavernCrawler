@@ -38,6 +38,7 @@
         <meta-data
             android:name="com.parse.CLIENT_KEY"
             android:value="@string/back4app_ck" />
+        <activity android:name=".WriteReviewActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true" />

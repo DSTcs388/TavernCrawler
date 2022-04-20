@@ -69,6 +69,8 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         profileImage = (ImageView) view.findViewById(R.id.profileImage);
         profileUsername = (TextView) view.findViewById(R.id.profileUsername);
+        //btnPicture = (Button) view.findViewById(R.id.btnPicture);
+
         startActivityForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
