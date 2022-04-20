@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.taverncrawler.fragments.ProfileFragment;
 import com.example.taverncrawler.fragments.ReviewsFragment;
+import com.example.taverncrawler.fragments.SettingsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
@@ -65,7 +66,9 @@ public class MainActivity extends AppCompatActivity {
                         drawerLayout.closeDrawers();
                         return true;
                     case R.id.action_settings:
+                        fragment = new SettingsFragment();
                         Toast.makeText(MainActivity.this, "You have clicked on settings!", Toast.LENGTH_SHORT).show();
+                        transaction.replace(R.id.container, fragment).commit();
                         drawerLayout.closeDrawers();
                         return true;
                     case R.id.action_logout:
