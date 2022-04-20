@@ -2,6 +2,7 @@ package com.example.taverncrawler;
 
 import android.app.Application;
 
+import com.example.taverncrawler.models.User;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -10,6 +11,7 @@ public class ParseApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        ParseObject.registerSubclass(User.class);
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId(getString(R.string.back4app_id))
                 .clientKey(getString(R.string.back4app_ck))

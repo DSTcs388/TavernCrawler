@@ -45,13 +45,13 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
+ * TODO:Get Images to work properly.
  */
 public class ProfileFragment extends Fragment {
 
     TextView profileUsername;
     ImageView profileImage;
     ActivityResultLauncher<Intent> startActivityForResult;
-    Button btnPicture;
     public static final String TAG = "ProfileFragment";
 
     public ProfileFragment() {
@@ -69,7 +69,6 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         profileImage = (ImageView) view.findViewById(R.id.profileImage);
         profileUsername = (TextView) view.findViewById(R.id.profileUsername);
-        btnPicture = (Button) view.findViewById(R.id.btnPicture);
         startActivityForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
@@ -80,15 +79,6 @@ public class ProfileFragment extends Fragment {
                 }
             }
         });
-        btnPicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i(TAG, "I was clicked!");
-                dispatchTakePictureIntent(view);
-            }
-        });
-
-
     }
 
     private File createImageFile() throws IOException {
