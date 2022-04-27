@@ -1,6 +1,7 @@
 package com.example.taverncrawler.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,10 @@ import com.example.taverncrawler.R;
 import com.example.taverncrawler.fragments.FeedFragment;
 import com.example.taverncrawler.viewmodels.RouteViewModel;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import okhttp3.Route;
 
@@ -27,16 +31,18 @@ import okhttp3.Route;
  */
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
-    private List<String> bars;
+    private HashMap<String, List<Double>> bars;
     private LifecycleOwner owner;
-    private List<String> selectedBars;
+    private HashMap<String, List<Double>> selectedBars;
     private final Context context;
     public static final String TAG = "FeedAdapter";
     public TextView tvName;
+    public TextView tvLat;
+    public TextView tvLong;
     public Button btnAdd;
     private RouteViewModel routeViewModel;
 
-    public FeedAdapter (Context context, List<String> bars, RouteViewModel routeViewModel, LifecycleOwner owner) {
+    public FeedAdapter (Context context, HashMap<String, List<Double>> bars, RouteViewModel routeViewModel, LifecycleOwner owner) {
         this.context = context;
         this.bars = bars;
         this.routeViewModel = routeViewModel;
@@ -51,8 +57,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String bar = bars.get(position);
-        holder.bind(bar);
+        List<String> barNames = new ArrayList<>(bars.keySet());
+        List<List<Double>> barCoords = new ArrayList<>(bars.values());
+        String barName = barNames.get(position);
+        Double barLat = barCoords.get(position).get(0);
+        Double barLong = barCoords.get(position).get(1);
+        holder.bind(barName, barLat, barLong);
 
     }
 
@@ -66,18 +76,29 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = (TextView) itemView.findViewById(R.id.tvName);
+            tvLat = (TextView) itemView.findViewById(R.id.tvLat);
+            tvLong = (TextView) itemView.findViewById(R.id.tvLong);
             btnAdd = (Button) itemView.findViewById(R.id.btnAdd);
+        }
+        public void bind (String barName, Double barLat, Double barLong)
+        {
+            tvName.setText(barName);
+            tvLat.setText(String.valueOf(barLat));
+            tvLong.setText(String.valueOf(barLong));
             btnAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    selectedBars.add(tvName.getText().toString());
+                    List<Double> list = new ArrayList<>();
+                    list.add(barLat);
+                    list.add(barLong);
+                    String name = barName;
                     //Update LiveData object
-                    routeViewModel.setSelectedBars(selectedBars);
+                    if(routeViewModel.getSelectedBars().getValue() == null) {
+                        routeViewModel.setSelectedBars(new HashMap<>());
+                    }
+                    routeViewModel.addBarToSelection(name, list);
                 }
             });
-        }
-        public void bind (String bar) {
-            tvName.setText(bar);
         }
     }
 

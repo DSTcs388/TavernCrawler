@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
 import android.content.Context;
@@ -30,6 +31,7 @@ import com.example.taverncrawler.fragments.RouteFragment;
 import com.example.taverncrawler.fragments.ReviewsFragment;
 import com.example.taverncrawler.fragments.SettingsFragment;
 
+import com.example.taverncrawler.viewmodels.RouteViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private BottomNavigationView bottomNavigationView;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+    private RouteViewModel routeViewModel;
     private NavigationView navigationView;
     private double latitude, longitude;
     private Location currentLocation;
@@ -63,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         navigationView = findViewById(R.id.navigation_view);
         drawerLayout = findViewById(R.id.drawer_layout);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        routeViewModel = new ViewModelProvider(this).get(RouteViewModel.class);
         isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -138,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                         bundle1.putDouble("lat", latitude);
                         bundle1.putDouble("longi", longitude);
                         fragment.setArguments(bundle1);
-                        fragment = new ReviewsFragment();
+                        //fragment = new ReviewsFragment();
                         transaction.replace(R.id.container, fragment).commit();
                         return true;
                 }

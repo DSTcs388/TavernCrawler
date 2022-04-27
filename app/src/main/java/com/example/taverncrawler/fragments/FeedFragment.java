@@ -33,6 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
@@ -46,7 +47,7 @@ public class FeedFragment extends Fragment {
     private RecyclerView rvFeed;
     private final RestClient client = new RestClient();
     public double latitude, longitude;
-    private List<String> bars = new ArrayList<>();
+    private HashMap<String, List<Double>> bars = new HashMap<>();
     private RouteViewModel routeViewModel;
 
     public FeedFragment() {
@@ -55,6 +56,7 @@ public class FeedFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        routeViewModel = new ViewModelProvider(requireActivity()).get(RouteViewModel.class);
     }
 
     @Override
@@ -71,8 +73,13 @@ public class FeedFragment extends Fragment {
         Log.i(TAG, "Longitude: " + String.valueOf(longitude) + "\n Latitude: " + String.valueOf(latitude));
 
         //LiveData to be observed in adapter
-        routeViewModel = new ViewModelProvider(requireActivity()).get(RouteViewModel.class);
         LifecycleOwner owner = getViewLifecycleOwner();
+        routeViewModel.getSelectedBars().observeForever(new Observer<HashMap<String, List<Double>>>() {
+            @Override
+            public void onChanged(HashMap<String, List<Double>> stringListHashMap) {
+                Log.i(TAG, stringListHashMap.toString());
+            }
+        });
 
 
         //Initialize RecyclerView and Adapter
@@ -111,7 +118,10 @@ public class FeedFragment extends Fragment {
                     JSONObject response = new JSONObject(new String(responseBody));
                     JSONArray data = response.getJSONArray("results");
                     for(int i = 0; i < data.length(); i++) {
-                        bars.add(data.getJSONObject(i).getString("name"));
+                        List<Double> list = new ArrayList<>();
+                        list.add(data.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").getDouble("lat"));
+                        list.add(data.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").getDouble("lng"));
+                        bars.put(data.getJSONObject(i).getString("name"), list);
                         adapter.notifyDataSetChanged();
                     }
                 }
