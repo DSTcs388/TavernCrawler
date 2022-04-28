@@ -39,7 +39,7 @@
             android:name="com.parse.CLIENT_KEY"
             android:value="@string/back4app_ck" />
         <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCD584zx4AbQN_WmvHtM4oayhysq0z8Zvc"/>
-        <activity android:name=".WriteReviewActivity" />
+        <activity android:name=".fragments.WriteReviewActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true" />

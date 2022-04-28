@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.taverncrawler.R;
 import com.example.taverncrawler.RestClient;
 import com.example.taverncrawler.adapters.FeedAdapter;
+import com.example.taverncrawler.models.Bar;
 import com.example.taverncrawler.viewmodels.RouteViewModel;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
@@ -47,7 +48,7 @@ public class FeedFragment extends Fragment {
     private RecyclerView rvFeed;
     private final RestClient client = new RestClient();
     public double latitude, longitude;
-    private HashMap<String, List<Double>> bars = new HashMap<>();
+    private List<Bar> bars = new ArrayList<>();
     private RouteViewModel routeViewModel;
 
     public FeedFragment() {
@@ -117,13 +118,8 @@ public class FeedFragment extends Fragment {
                     //Add bars to list
                     JSONObject response = new JSONObject(new String(responseBody));
                     JSONArray data = response.getJSONArray("results");
-                    for(int i = 0; i < data.length(); i++) {
-                        List<Double> list = new ArrayList<>();
-                        list.add(data.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").getDouble("lat"));
-                        list.add(data.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").getDouble("lng"));
-                        bars.put(data.getJSONObject(i).getString("name"), list);
-                        adapter.notifyDataSetChanged();
-                    }
+                    adapter.addAll(Bar.fromJSONArray(data));
+                    adapter.notifyDataSetChanged();
                 }
                 catch (JSONException e) {
                     Log.i(TAG, "Fail response:" + statusCode + ":" + e);

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
-<RelativeLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".fragments.WriteReviewFragment">
 
     <EditText
         android:id="@+id/etReviewTitle"
@@ -55,4 +55,3 @@
         android:layout_marginEnd="129dp"
         android:text="Submit Review" />
 </RelativeLayout>
-</layout>

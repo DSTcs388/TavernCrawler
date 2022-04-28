@@ -1,12 +1,10 @@
 package com.example.taverncrawler.fragments;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -24,7 +22,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.android.PolyUtil;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -52,9 +49,10 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
     private HashMap<String, List<Double>> selectedBars = new HashMap<>();
     private RouteViewModel routeViewModel;
     private GoogleMap map;
-    private List<String> directions = new ArrayList<>();
+    private LatLng currentPosition;
+    private final HashMap<String, String> directions = new HashMap<>();
     private List<String> barNames = new ArrayList<>();
-    private List<List<LatLng>> directionsDecoded = new ArrayList<>();
+    private final HashMap<String, List<LatLng>> directionsDecoded = new HashMap<>();
 
     //Required empty public constructor
     public RouteFragment() {}
@@ -100,6 +98,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
         Bundle bundle = getArguments();
         latitude = bundle.getDouble("lat");
         longitude = bundle.getDouble("longi");
+        currentPosition = new LatLng(latitude, longitude);
         Log.i(TAG, "Current Latitude: " + String.valueOf(latitude) + "Current Longitude: " + String.valueOf(longitude));
 
         //Initializes map fragment for display
@@ -140,13 +139,15 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
 
     //Creates a series of Asynchronous GET requests in order to fetch the directions for each bar in the list of bars
     private void updateRoute(GoogleMap googleMap, HashMap<String, List<Double>> selectedBars) {
-        Iterator<List<Double>> iterator = selectedBars.values().iterator();
+        Iterator<Map.Entry<String, List<Double>>> iterator = selectedBars.entrySet().iterator();
         List<Double> list = new ArrayList<>();
         while(iterator.hasNext()) {
-            list = iterator.next();
+            Map.Entry<String, List<Double>> pair = iterator.next();
+            list = pair.getValue();
+            String name = pair.getKey();
             Log.i(TAG, "Current Iteration: " + list.toString());
             //DirectionsCallbackInterface is used here in order to force decodeDirections to execute if and only if directions is populated with data
-            getDirections(list.get(0), list.get(1), new DirectionsCallbackInterface() {
+            getDirections(list.get(0), list.get(1), name, new DirectionsCallbackInterface() {
                 @Override
                 public void onListPopulated() {
                     decodeDirections(googleMap);
@@ -162,21 +163,23 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
      * @param directionsCallbackInterface The interface's onListPopulated() method is only called when the asynchronous request is fully finished
      * In order to prevent decodeDirections() from being called multiple times, a check must be performed to make sure that it is only called after the all bars in selectedBars have been parsed into the directions list
      */
-    private void getDirections(Double c1, Double c2, DirectionsCallbackInterface directionsCallbackInterface) {
+    private void getDirections(Double c1, Double c2, String name, DirectionsCallbackInterface directionsCallbackInterface) {
         RequestParams params = new RequestParams();
-        params.put("origin", String.valueOf(latitude) + "," + String.valueOf(longitude));
+        params.put("origin", String.valueOf(currentPosition.latitude) + "," + String.valueOf(currentPosition.longitude));
         params.put("destination", String.valueOf(c1) + "," + String.valueOf(c2));
         params.put("key", getString(R.string.places_api_key));
+        currentPosition = new LatLng(c1, c2);
         client.get("https://maps.googleapis.com/maps/api/directions/json?", params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 Log.i(TAG, "" + statusCode);
+                Log.i(TAG, new String(responseBody));
                 try {
                     JSONObject response = new JSONObject(new String(responseBody));
                     JSONArray data = response.getJSONArray("routes");
                     for(int i = 0; i < data.length(); i++) {
                         String encodedPolyline = data.getJSONObject(i).getJSONObject("overview_polyline").getString("points");
-                        directions.add(encodedPolyline);
+                        directions.put(name, encodedPolyline);
                     }
                 }
                 catch (JSONException e) {
@@ -199,26 +202,22 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
     }
     //Decodes the directions into a list of LatLng coordinates that constitute the route from the current location to the bar
     private void decodeDirections(GoogleMap googleMap) {
-        for(int i = 0; i < directions.size(); i++) {
-            String encodedString = directions.get(i);
+        for (Map.Entry<String, String> pair : directions.entrySet()) {
+            String encodedString = pair.getValue();
+            String barName = pair.getKey();
             List<LatLng> coords = PolyUtil.decode(encodedString);
-            directionsDecoded.add(coords);
+            directionsDecoded.put(barName, coords);
         }
         Log.i(TAG, directionsDecoded.toString());
         drawPolylines(googleMap);
     }
     //Adds polyline to map
     private void drawPolylines(GoogleMap googleMap) {
-        for(int i  = 0; i < directionsDecoded.size(); i++) {
-            googleMap
-            .addMarker(new MarkerOptions()
-                    .position(directionsDecoded
-                            .get(i)
-                            .get(directionsDecoded
-                                    .get(i)
-                                    .size()-1))
-                    .title(barNames.get(i)));
-            googleMap.addPolyline(new PolylineOptions().addAll(directionsDecoded.get(i)));
+        for(Map.Entry<String, List<LatLng>> pair : directionsDecoded.entrySet()) {
+            List<LatLng> coords = pair.getValue();
+            String barName = pair.getKey();
+            googleMap.addMarker(new MarkerOptions().position(coords.get(coords.size()-1)).title(barName));
+            googleMap.addPolyline(new PolylineOptions().addAll(coords));
         }
     }
 }

@@ -1,14 +1,17 @@
 package com.example.taverncrawler.adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -16,8 +19,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.taverncrawler.R;
+import com.example.taverncrawler.fragments.DetailFragment;
 import com.example.taverncrawler.fragments.FeedFragment;
+import com.example.taverncrawler.models.Bar;
 import com.example.taverncrawler.viewmodels.RouteViewModel;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,18 +38,16 @@ import okhttp3.Route;
  */
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
-    private HashMap<String, List<Double>> bars;
+    private List<Bar> bars;
     private LifecycleOwner owner;
     private HashMap<String, List<Double>> selectedBars;
     private final Context context;
     public static final String TAG = "FeedAdapter";
     public TextView tvName;
-    public TextView tvLat;
-    public TextView tvLong;
     public Button btnAdd;
     private RouteViewModel routeViewModel;
 
-    public FeedAdapter (Context context, HashMap<String, List<Double>> bars, RouteViewModel routeViewModel, LifecycleOwner owner) {
+    public FeedAdapter (Context context, List<Bar> bars, RouteViewModel routeViewModel, LifecycleOwner owner) {
         this.context = context;
         this.bars = bars;
         this.routeViewModel = routeViewModel;
@@ -57,12 +62,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        List<String> barNames = new ArrayList<>(bars.keySet());
-        List<List<Double>> barCoords = new ArrayList<>(bars.values());
-        String barName = barNames.get(position);
-        Double barLat = barCoords.get(position).get(0);
-        Double barLong = barCoords.get(position).get(1);
-        holder.bind(barName, barLat, barLong);
+        Bar bar = bars.get(position);
+        holder.bind(bar);
 
     }
 
@@ -71,27 +72,39 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         return bars.size();
     }
 
+    public void addAll(List<Bar> list) {
+        bars.addAll(list);
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = (TextView) itemView.findViewById(R.id.tvName);
-            tvLat = (TextView) itemView.findViewById(R.id.tvLat);
-            tvLong = (TextView) itemView.findViewById(R.id.tvLong);
             btnAdd = (Button) itemView.findViewById(R.id.btnAdd);
         }
-        public void bind (String barName, Double barLat, Double barLong)
+        public void bind (Bar bar)
         {
-            tvName.setText(barName);
-            tvLat.setText(String.valueOf(barLat));
-            tvLong.setText(String.valueOf(barLong));
+            tvName.setText(bar.getName());
+            tvName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                    DetailFragment detailFragment = new DetailFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("bar", Parcels.wrap(bar));
+                    detailFragment.setArguments(bundle);
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, detailFragment).commit();
+                }
+            });
             btnAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     List<Double> list = new ArrayList<>();
-                    list.add(barLat);
-                    list.add(barLong);
-                    String name = barName;
+                    list.add(bar.getLatitude());
+                    list.add(bar.getLongitude());
+                    String name = bar.getName();
                     //Update LiveData object
                     if(routeViewModel.getSelectedBars().getValue() == null) {
                         routeViewModel.setSelectedBars(new HashMap<>());

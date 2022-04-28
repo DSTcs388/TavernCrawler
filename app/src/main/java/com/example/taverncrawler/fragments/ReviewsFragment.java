@@ -7,18 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.taverncrawler.R;
 import com.example.taverncrawler.ReviewAdapter;
-import com.example.taverncrawler.WriteReviewActivity;
 import com.example.taverncrawler.models.Review;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -32,6 +29,7 @@ public class ReviewsFragment extends Fragment {
     private RecyclerView rvReviews;
     protected ReviewAdapter adapter;
     protected List<Review> allReviews;
+    private String name;
 
     public ReviewsFragment()
     {
@@ -51,16 +49,18 @@ public class ReviewsFragment extends Fragment {
         rvReviews = view.findViewById(R.id.rvReviews);
         allReviews = new ArrayList<>();
         adapter = new ReviewAdapter(getContext(), allReviews);
-        Log.i("ReviewsFragment", adapter.toString());
-        Log.i("ReviewsFragment", rvReviews.toString());
         rvReviews.setAdapter(adapter);
+        Bundle bundle = getArguments();
+        name = bundle.getString("name");
         rvReviews.setLayoutManager(new LinearLayoutManager(getContext()));
         buttonWrite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(getContext(), "test", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(), WriteReviewActivity.class);
-                startActivity(intent);
+                WriteReviewFragment fragment = new WriteReviewFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("name", name);
+                fragment.setArguments(bundle);
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
             }
         });
         queryReviews();
@@ -70,6 +70,7 @@ public class ReviewsFragment extends Fragment {
     {
         ParseQuery<Review> query = ParseQuery.getQuery(Review.class);
         query.setLimit(10);
+        query.whereEqualTo("bar", name);
         query.findInBackground(new FindCallback<Review>() {
             @Override
             public void done(List<Review> reviews, ParseException e) {
