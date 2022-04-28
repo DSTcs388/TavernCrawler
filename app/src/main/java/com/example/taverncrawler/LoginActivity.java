@@ -15,6 +15,9 @@ import android.widget.Toast;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SignUpCallback;
+
+import android.os.Parcelable.ClassLoaderCreator;
 
 public class LoginActivity extends AppCompatActivity {
     public static final String TAG = "LoginActivity";
@@ -27,15 +30,45 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        if(ParseUser.getCurrentUser() != null) {
+            login(ParseUser.getCurrentUser().getUsername());
+        }
+
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
         btnLogin = (Button) findViewById(R.id.btnLogin);
+        Button SignUp = (Button)findViewById(R.id.btnSignup);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String username = etUsername.getText().toString();
                 String password = etUsername.getText().toString();
                 loginUser(username, password);
+            }
+        });
+        SignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String username = etUsername.getText().toString();
+                String password = etUsername.getText().toString();
+                ParseUser newperson = new ParseUser();
+                newperson.setUsername(username);
+                newperson.setPassword(password);
+                newperson.signUpInBackground(new SignUpCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if(e == null){
+                            Log.i("Parse Result","Successful!");
+                            Log.i("Current User",ParseUser.getCurrentUser().getUsername());
+                            loginUser(username,password);
+                        }
+                        else{
+                            Log.i("Parse Result","Failed " + e.toString());
+                        }
+
+                    }
+                });
+
             }
         });
     }
@@ -48,13 +81,6 @@ public class LoginActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("username", username);
-
-        SharedPreferences sharedPreferences = getSharedPreferences("Login Check", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(getString(R.string.userLogged), true);
-        editor.putString("username", username);
-        editor.commit();
-
         startActivity(intent);
         finish();
     }
@@ -72,5 +98,5 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    
+
 }

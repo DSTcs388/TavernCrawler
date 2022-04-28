@@ -58,4 +58,10 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:text="Change Local Zip Code" />
+
+    <AutoCompleteTextView
+        android:id="@+id/txtvwchange"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="zipcode/username/password" />
 </LinearLayout>

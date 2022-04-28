@@ -16,7 +16,9 @@
         android:name=".ParseApplication"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.TavernCrawler">
+        android:theme="@style/Theme.TavernCrawler"
+        android:usesCleartextTraffic="true"
+        >
     <provider
         android:authorities="com.example.taverncrawler.fileprovider"
         android:name="androidx.core.content.FileProvider"
