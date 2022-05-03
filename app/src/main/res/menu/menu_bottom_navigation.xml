@@ -4,12 +4,12 @@
 
     <item
         android:id="@+id/action_feed"
-        android:icon="@android:drawable/btn_dialog"
+        android:icon="@drawable/ic_action_feed"
         android:title="Feed"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_route"
-        android:icon="@android:drawable/arrow_up_float"
+        android:icon="@drawable/ic_action_name"
         android:title="Route"
         app:showAsAction="always" />
 </menu>

@@ -4,6 +4,8 @@
     <string name="back4app_ck">dw3kGmDqwqbWdIwLMJkNpne5EoGGl9U7Sen2KyJY</string>
     <string name="back4app_url">https://parseapi.back4app.com/</string>
     <string name="places_api_key">AIzaSyCD584zx4AbQN_WmvHtM4oayhysq0z8Zvc</string>
+    <string name="yelp_client_id">ioZ_gKXXGAUQbhPejJJOwA</string>
+    <string name="yelp_api_key">TrhqG2W8ACSwuj1Akb5VjqhWyty9zL7exphR9VR6Mtl4ZpiSM9LBUxwZ1USdIGhBMGprGdTOOV55rYTD_Q6pATHUwhOx5mgrGw307DVS4VbTLrMahhPF3woGYWBtYnYx</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nav_open">Open</string>

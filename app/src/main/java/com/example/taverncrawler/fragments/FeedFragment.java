@@ -102,7 +102,7 @@ public class FeedFragment extends Fragment {
         //Create search parameters
         RequestParams params = new RequestParams();
         params.put("location", String.valueOf(latitude) + "," + String.valueOf(longitude));
-        params.put("radius", "2000");
+        params.put("radius", "5000");
         params.put("type", "bar");
         params.put("key", getString(R.string.places_api_key));
         /**
@@ -118,7 +118,7 @@ public class FeedFragment extends Fragment {
                     //Add bars to list
                     JSONObject response = new JSONObject(new String(responseBody));
                     JSONArray data = response.getJSONArray("results");
-                    adapter.addAll(Bar.fromJSONArray(data));
+                    adapter.addAll(Bar.fromJSONArray(data, latitude, longitude));
                     adapter.notifyDataSetChanged();
                 }
                 catch (JSONException e) {
@@ -128,7 +128,7 @@ public class FeedFragment extends Fragment {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Log.i(TAG, ""+statusCode+":"+ error);
+                Log.i(TAG, "" + statusCode + ":" + error);
             }
         });
     }

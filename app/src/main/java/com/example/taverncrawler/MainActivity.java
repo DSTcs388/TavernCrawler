@@ -3,6 +3,7 @@ package com.example.taverncrawler;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         setContentView(R.layout.activity_main);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         navigationView = findViewById(R.id.navigation_view);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         drawerLayout = findViewById(R.id.drawer_layout);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         routeViewModel = new ViewModelProvider(this).get(RouteViewModel.class);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,6 +10,8 @@
         android:id="@+id/tvBarName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/ivBarPicture"
+        android:layout_marginTop="20dp"
         android:fontFamily="serif"
         android:text="TextView"
         android:textAlignment="center"
@@ -18,7 +21,7 @@
         android:id="@+id/tvRatingsTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvRating"
+        android:layout_below="@+id/tvPhone"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:fontFamily="serif"
@@ -26,15 +29,18 @@
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/tvRating"
+        android:id="@+id/tvGoogleReviews"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvVicinity"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        android:layout_toStartOf="@+id/tvUserReviews"
         android:fontFamily="serif"
         android:text="TextView"
-        android:textSize="24sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/tvVicinity"
@@ -55,4 +61,61 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:text="View Reviews" />
+
+    <ImageView
+        android:id="@+id/ivBarPicture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvUserReviews"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvVicinity"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:fontFamily="serif"
+        android:text="TextView"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvYelpReviews"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvVicinity"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="0dp"
+        android:layout_toEndOf="@+id/tvUserReviews"
+        android:fontFamily="serif"
+        android:text="TextView"
+        android:textAlignment="textEnd"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvOperatingHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvUserReviews"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:fontFamily="serif"
+        android:text="TextView"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/tvPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvOperatingHours"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:fontFamily="serif"
+        android:text="TextView"
+        android:textSize="24sp" />
 </RelativeLayout>

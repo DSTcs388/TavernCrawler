@@ -5,7 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="#242424"
     tools:context=".MainActivity"
     tools:ignore="HardcodedText">
 
@@ -21,9 +21,9 @@
             android:layout_marginBottom="0dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
-            android:background="#3A6691"
-            app:itemIconTint="@color/black"
-            app:itemTextColor="#000000"
+            android:backgroundTint="#424242"
+            app:itemIconTint="#FFFFFF"
+            app:itemTextColor="#FFFFFF"
             app:menu="@menu/menu_bottom_navigation">
         </com.google.android.material.bottomnavigation.BottomNavigationView>
     </RelativeLayout>

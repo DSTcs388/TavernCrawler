@@ -1,7 +1,9 @@
 package com.example.taverncrawler;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,6 +31,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        getSupportActionBar().hide();
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
         if(ParseUser.getCurrentUser() != null) {
             login(ParseUser.getCurrentUser().getUsername());
@@ -41,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.i(TAG, "Button clicked");
                 String username = etUsername.getText().toString();
                 String password = etUsername.getText().toString();
                 loginUser(username, password);
@@ -65,20 +70,13 @@ public class LoginActivity extends AppCompatActivity {
                         else{
                             Log.i("Parse Result","Failed " + e.toString());
                         }
-
                     }
                 });
 
             }
         });
     }
-
-    /**
-     * Function used to switch activities and create persistence using Shared Preferences.
-     * @params The parameters for this function will be the information stored on the user's profile.
-     */
     private void login(String username) {
-
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("username", username);
         startActivity(intent);
@@ -86,6 +84,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginUser(String username, String password) {
+        ProgressDialog loading = new ProgressDialog(this);
+        loading.setTitle("Logging in...");
+        loading.show();
+        loading.setCanceledOnTouchOutside(false);
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
@@ -94,6 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+                loading.dismiss();
                 login(username);
             }
         });

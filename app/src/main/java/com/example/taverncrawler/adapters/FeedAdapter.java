@@ -44,6 +44,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     private final Context context;
     public static final String TAG = "FeedAdapter";
     public TextView tvName;
+    public TextView tvDistance;
     public Button btnAdd;
     private RouteViewModel routeViewModel;
 
@@ -82,6 +83,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = (TextView) itemView.findViewById(R.id.tvName);
+            tvDistance = (TextView) itemView.findViewById(R.id.tvDistance);
             btnAdd = (Button) itemView.findViewById(R.id.btnAdd);
         }
         public void bind (Bar bar)
@@ -98,6 +100,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, detailFragment).commit();
                 }
             });
+            tvDistance.setText(String.valueOf(bar.getDistance()));
             btnAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
