@@ -339,3 +339,5 @@ image | File | Image associated with the bar
 	    }
 	 });
 ```
+![Video Walkthrough 7]
+![Video Walkthrough 8](ezgif-2-9702746ee1.gif)
