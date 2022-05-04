@@ -26,7 +26,7 @@ TavernCrawler is an app geared towards making the boring side of planning of a b
 
 * [x] Users can sign in or create account
 * [x] User can view a list of local pubs
-* [x]User can create a list or route of pubs they want to visit
+* [x] User can create a list or route of pubs they want to visit
 * [x] Users can rate bars
 * [x] Detail screen for bars with a menu, ratings, and contact information
 * [x] User can review bars
@@ -34,8 +34,8 @@ TavernCrawler is an app geared towards making the boring side of planning of a b
 **Optional Nice-to-have Stories**
 
 * [ ] Lyft connectivity to order a ride home to a specified location
-* [ ]Show deals for local bars (if possible)
-* [ ]User can blacklist bars
+* [ ] Show deals for local bars (if possible)
+* [ ] User can blacklist bars
 
 ### 2. Screen Archetypes
 
