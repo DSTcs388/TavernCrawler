@@ -91,15 +91,24 @@ public class DetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         tvBarName = (TextView) view.findViewById(R.id.tvBarName);
+        tvBarName.setVisibility(View.INVISIBLE);
         tvRatingsTotal = (TextView) view.findViewById(R.id.tvRatingsTotal);
+        tvRatingsTotal.setVisibility(View.INVISIBLE);
         tvGoogleReviews = (TextView) view.findViewById(R.id.tvGoogleReviews);
+        tvGoogleReviews.setVisibility(View.INVISIBLE);
         tvYelpReviews = (TextView) view.findViewById(R.id.tvYelpReviews);
+        tvYelpReviews.setVisibility(View.INVISIBLE);
         tvUserReviews = (TextView) view.findViewById(R.id.tvUserReviews);
+        tvUserReviews.setVisibility(View.INVISIBLE);
         tvOperatingHours = (TextView) view.findViewById(R.id.tvOperatingHours);
+        tvOperatingHours.setVisibility(View.INVISIBLE);
         tvVicinity = (TextView) view.findViewById(R.id.tvVicinity);
+        tvVicinity.setVisibility(View.INVISIBLE);
         tvPhone = (TextView) view.findViewById(R.id.tvPhone);
+        tvPhone.setVisibility(View.INVISIBLE);
         ivBarPicture = (ImageView) view.findViewById(R.id.ivBarPicture);
         btnViewReviews = (Button) view.findViewById(R.id.btnViewReviews);
+        btnViewReviews.setVisibility(View.INVISIBLE);
 
         ProgressDialog loading = new ProgressDialog(requireActivity());
         loading.setMessage("Loading information...");
@@ -125,7 +134,7 @@ public class DetailFragment extends Fragment {
         params.add("latitude",  String.valueOf(bar.getLatitude()));
         params.add("longitude", String.valueOf(bar.getLongitude()));
         params.add("term", bar.getName());
-        params.add("categories", "bars");
+        //params.add("categories", "bars");
         client.addHeader("Authorization", "Bearer " + getString(R.string.yelp_api_key));
         client.get("https://api.yelp.com/v3/businesses/search?", params, new AsyncHttpResponseHandler() {
             @Override
@@ -192,6 +201,15 @@ public class DetailFragment extends Fragment {
         tvOperatingHours.setText(startHours + " - " + endHours);
         tvPhone.setText(phoneNumber);
         tvRatingsTotal.setText("Total Reviews: " + String.valueOf(totalReviews));
+        tvBarName.setVisibility(View.VISIBLE);
+        tvVicinity.setVisibility(View.VISIBLE);
+        tvGoogleReviews.setVisibility(View.VISIBLE);
+        tvUserReviews.setVisibility(View.VISIBLE);
+        tvYelpReviews.setVisibility(View.VISIBLE);
+        tvOperatingHours.setVisibility(View.VISIBLE);
+        tvPhone.setVisibility(View.VISIBLE);
+        tvRatingsTotal.setVisibility(View.VISIBLE);
+        btnViewReviews.setVisibility(View.VISIBLE);
         dialog.dismiss();
     }
 

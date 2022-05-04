@@ -1,14 +1,18 @@
 package com.example.taverncrawler.adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,7 +49,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     public static final String TAG = "FeedAdapter";
     public TextView tvName;
     public TextView tvDistance;
+    public TextView tvClickableOne;
+    public TextView tvClickableTwo;
     public Button btnAdd;
+    public RatingBar ratingBarReviews;
     private RouteViewModel routeViewModel;
 
     public FeedAdapter (Context context, List<Bar> bars, RouteViewModel routeViewModel, LifecycleOwner owner) {
@@ -84,12 +91,21 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             super(itemView);
             tvName = (TextView) itemView.findViewById(R.id.tvName);
             tvDistance = (TextView) itemView.findViewById(R.id.tvDistance);
+            tvClickableOne = (TextView) itemView.findViewById(R.id.tvClickableOne);
+            tvClickableTwo = (TextView) itemView.findViewById(R.id.tvClickableTwo);
             btnAdd = (Button) itemView.findViewById(R.id.btnAdd);
+            ratingBarReviews = (RatingBar) itemView.findViewById(R.id.ratingBarReviews);
         }
         public void bind (Bar bar)
         {
-            tvName.setText(bar.getName());
-            tvName.setOnClickListener(new View.OnClickListener() {
+            if(bar.getName().length() >= 35){
+                tvName.setText(bar.getName().substring(0, 35) + "...");
+            }
+            else {
+                tvName.setText(bar.getName());
+            }
+            tvDistance.setText(String.valueOf(bar.getDistance()) + " miles away");
+            tvClickableOne.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     AppCompatActivity activity = (AppCompatActivity) view.getContext();
@@ -100,21 +116,48 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, detailFragment).commit();
                 }
             });
-            tvDistance.setText(String.valueOf(bar.getDistance()));
+            tvClickableTwo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                    DetailFragment detailFragment = new DetailFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("bar", Parcels.wrap(bar));
+                    detailFragment.setArguments(bundle);
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, detailFragment).commit();
+                }
+            });
             btnAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    List<Double> list = new ArrayList<>();
-                    list.add(bar.getLatitude());
-                    list.add(bar.getLongitude());
-                    String name = bar.getName();
-                    //Update LiveData object
-                    if(routeViewModel.getSelectedBars().getValue() == null) {
-                        routeViewModel.setSelectedBars(new HashMap<>());
-                    }
-                    routeViewModel.addBarToSelection(name, list);
+                    CharSequence[] options = {"Yes", "No"};
+                    AlertDialog.Builder builder = new AlertDialog.Builder((AppCompatActivity) view.getContext());
+                    builder.setTitle("Add to route?");
+                    builder.setItems(options, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            if(options[i].equals("Yes")) {
+                                List<Double> list = new ArrayList<>();
+                                list.add(bar.getLatitude());
+                                list.add(bar.getLongitude());
+                                String name = bar.getName();
+                                //Update LiveData object
+                                if(routeViewModel.getSelectedBars().getValue() == null) {
+                                    routeViewModel.setSelectedBars(new HashMap<>());
+                                }
+                                routeViewModel.addBarToSelection(name, list);
+                                Toast.makeText((AppCompatActivity) view.getContext(), "Bar successfully added to route", Toast.LENGTH_SHORT).show();
+                                dialogInterface.dismiss();
+                            }
+                            else if (options[i].equals("No")) {
+                                dialogInterface.dismiss();
+                            }
+                        }
+                    });
+                    builder.show();
                 }
             });
+            ratingBarReviews.setRating((float) bar.getRating());
         }
     }
 

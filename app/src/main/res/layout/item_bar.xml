@@ -1,37 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/itemBar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tvName"
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:text="Name"
-        android:textSize="20sp" />
+        android:layout_margin="5dp"
+        app:cardCornerRadius="5dp">
 
-    <Button
-        android:id="@+id/btnAdd"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="42dp"
-        android:layout_toEndOf="@+id/tvDistance"
-        android:text="Add" />
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:text="TextView"
+            android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/tvDistance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="false"
-        android:layout_marginStart="47dp"
-        android:layout_toEndOf="@+id/tvName"
-        android:text="TextView"
-        android:textSize="20sp" />
+        <Button
+            android:id="@+id/btnAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvDistance"
+            android:layout_alignParentTop="false"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="50dp"
+            android:backgroundTint="#03DAC5"
+            android:text="Add" />
+
+        <TextView
+            android:id="@+id/tvDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvName"
+            android:layout_centerVertical="false"
+            android:layout_marginTop="25dp"
+            android:text="0.00 miles away"
+            android:textSize="20sp" />
+
+        <RatingBar
+            android:id="@+id/ratingBarReviews"
+            style="@style/Widget.AppCompat.RatingBar.Indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="23dp"
+            android:isIndicator="true"
+            android:max="5"
+            android:scaleX="0.5"
+            android:scaleY="0.5" />
+
+        <TextView
+            android:id="@+id/tvClickableOne"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" />
+
+        <TextView
+            android:id="@+id/tvClickableTwo"
+            android:layout_width="311dp"
+            android:layout_height="47dp"
+            android:layout_marginStart="90dp"
+            android:layout_marginTop="50dp" />
+    </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

@@ -13,6 +13,7 @@ public class User extends ParseUser {
     public static final String CreatedAt = "createdAt";
     public static final String Email = "email";
     public static final String EmailVerified = "emailVerified";
+    public static final String Zipcode = "zipcode";
 
     public ParseFile getImage() {
         return getParseFile(Image);
@@ -26,15 +27,20 @@ public class User extends ParseUser {
         return getParseUser(User);
     }
 
-    public void setUser(ParseUser parseUser) {
-        put(User, parseUser);
+    public void setUser(String username) {
+        put(User, username);
     }
 
     public boolean getEmailVerified() {
         return getBoolean(EmailVerified);
     }
+
     public void setEmailVerified(boolean verified) {
         put(EmailVerified, verified);
+    }
+
+    public void setZipcode(String zipcode) {
+        put(Zipcode, zipcode);
     }
 
     @Override

@@ -39,6 +39,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.taverncrawler.R;
 import com.example.taverncrawler.models.User;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
@@ -64,8 +65,9 @@ import java.util.List;
  */
 public class ProfileFragment extends Fragment {
 
-    TextView profileUsername;
+    TextView profileUsername, profileEmail, profileZipcode;
     ImageView profileImage;
+    FloatingActionButton fab;
     ActivityResultLauncher<Intent> startActivityForResult;
     public static final String TAG = "ProfileFragment";
     public String photoFileName = "photo.jpg";
@@ -86,6 +88,9 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         profileImage = (ImageView) view.findViewById(R.id.profileImage);
         profileUsername = (TextView) view.findViewById(R.id.profileUsername);
+        profileEmail = (TextView) view.findViewById(R.id.profileEmail);
+        profileZipcode = (TextView) view.findViewById(R.id.profileZipcode);
+        fab = (FloatingActionButton) view.findViewById(R.id.fab);
         Fragment fragment = this;
         profileUsername.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +100,7 @@ public class ProfileFragment extends Fragment {
         });
         loadProfileInformation(profileImage);
         final CharSequence[] options = { "Choose from Gallery", "Cancel" };
-        profileImage.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(requireActivity(), "This image is clickable!", Toast.LENGTH_SHORT).show();
@@ -258,7 +263,9 @@ public class ProfileFragment extends Fragment {
                         Uri imageUri = Uri.parse(image);
                         Glide.with(requireActivity()).load(imageUri).override(200, 200).into(imageView);
                     }
-                    profileUsername.setText(parseUser.getString("username"));
+                    profileUsername.setText("Welcome, " + parseUser.getString("username"));
+                    profileEmail.setText("Email: " + parseUser.getString("email"));
+                    profileZipcode.setText("ZipCode: " + parseUser.getString("zipcode"));
                     Log.i(TAG, objects.toString());
                 }
             }

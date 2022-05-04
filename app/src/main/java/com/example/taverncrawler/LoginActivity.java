@@ -3,10 +3,10 @@ package com.example.taverncrawler;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,9 +17,6 @@ import android.widget.Toast;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
-import com.parse.SignUpCallback;
-
-import android.os.Parcelable.ClassLoaderCreator;
 
 public class LoginActivity extends AppCompatActivity {
     public static final String TAG = "LoginActivity";
@@ -54,25 +51,9 @@ public class LoginActivity extends AppCompatActivity {
         SignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String username = etUsername.getText().toString();
-                String password = etUsername.getText().toString();
-                ParseUser newperson = new ParseUser();
-                newperson.setUsername(username);
-                newperson.setPassword(password);
-                newperson.signUpInBackground(new SignUpCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if(e == null){
-                            Log.i("Parse Result","Successful!");
-                            Log.i("Current User",ParseUser.getCurrentUser().getUsername());
-                            loginUser(username,password);
-                        }
-                        else{
-                            Log.i("Parse Result","Failed " + e.toString());
-                        }
-                    }
-                });
-
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -92,12 +73,26 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void done(ParseUser user, ParseException e) {
                 if(e != null) {
-                    Log.e(TAG, "Something went wrong with Parse", e);
-                    return;
+                    loading.dismiss();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                    CharSequence[] options = {"Okay"};
+                    builder.setTitle("Invalid Username/Password");
+                    builder.setItems(options, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Log.e(TAG, "Something went wrong with Parse", e);
+                            etUsername.setText("");
+                            etPassword.setText("");
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    builder.show();
                 }
+                else {
                 Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
                 loading.dismiss();
                 login(username);
+                }
             }
         });
     }

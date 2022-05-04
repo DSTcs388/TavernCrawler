@@ -24,7 +24,6 @@ import java.util.List;
 
 public class SettingsFragment extends Fragment {
     private Button buttonChangeZip;
-    private Switch switchVisualStyle;
     private Button buttonChangeUser;
     private Button buttonchangePass;
     private MaterialAutoCompleteTextView txtvwChange;
@@ -43,68 +42,21 @@ public class SettingsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         buttonChangeZip = view.findViewById(R.id.buttonChangeZip);
-        switchVisualStyle = view.findViewById(R.id.switchVisualStyle);
         buttonChangeUser = view.findViewById(R.id.buttonChangeUsername);
-        buttonchangePass = view.findViewById(R.id.buttonChangePassword);
-        txtvwChange = view.findViewById(R.id.txtvwchange);
         buttonChangeZip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Changing zipcode is under construction!", Toast.LENGTH_SHORT).show();
+                ChangeZipcodeFragment fragment = new ChangeZipcodeFragment();
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+
             }
         });
         buttonChangeUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String change = txtvwChange.getText().toString();
-                ParseQuery<ParseUser> query = ParseUser.getQuery();
-                query.whereEqualTo("username", ParseUser.getCurrentUser());
-                query.setLimit(1);
-                query.findInBackground(new FindCallback<ParseUser>() {
-                    @Override
-                    public void done(List<ParseUser> objects, ParseException e) {
-                        if(e != null) {
-                            Log.e("Settings", "ParseError: ", e);
-                            Toast.makeText(getContext(), "A problem occurred saving your image", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        ParseUser user = objects.get(0);
-                        user.put("username",change);
-                        user.saveInBackground();
-                    }
-                });
+                ChangeUsername fragement = new ChangeUsername();
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, fragement).commit();
 
-            }
-        });
-        buttonchangePass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String change = txtvwChange.getText().toString();
-                ParseQuery<ParseUser> query = ParseUser.getQuery();
-                query.whereEqualTo("username", ParseUser.getCurrentUser());
-                query.setLimit(1);
-                query.findInBackground(new FindCallback<ParseUser>() {
-                    @Override
-                    public void done(List<ParseUser> objects, ParseException e) {
-                        if(e != null) {
-                            Log.e("Settings", "ParseError: ", e);
-                            Toast.makeText(getContext(), "A problem occurred saving your image", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        ParseUser user = objects.get(0);
-                        user.put("password",change);
-                        user.saveInBackground();
-                    }
-                });
-
-
-            }
-        });
-
-        switchVisualStyle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getContext(), "Changing visuals is under construction!", Toast.LENGTH_SHORT).show();
             }
         });
     }
